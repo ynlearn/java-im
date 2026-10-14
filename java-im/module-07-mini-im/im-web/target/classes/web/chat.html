@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini IM (Module 07)</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; margin: 20px; max-width: 720px; }
+        #log { border: 1px solid #ccc; padding: 10px; height: 360px; overflow-y: auto; background: #fafafa; }
+        #log .sys { color: #888; font-style: italic; }
+        #log .off { color: #d00; }
+        input, button { padding: 8px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>Mini IM 网页客户端</h1>
+
+    <div>
+        用户名: <input id="username" placeholder="登录用户名" />
+        <button id="btn-login">登录</button>
+        <span id="status">未登录</span>
+    </div>
+
+    <p>本客户端是 mini IM 的 WebSocket demo。生产 mini IM 走 TCP 协议（ImCommand 二进制帧）。</p>
+    <p>本 demo 通过 WebSocket 9099 端口连接（复用第 6 章的 chat server）。</p>
+
+    <div id="log"></div>
+
+    <input id="input" type="text" placeholder="@user 消息内容 或 @all 群消息" style="width: 80%;" />
+    <button id="btn-send">发送</button>
+
+    <script>
+        const log = document.getElementById('log');
+        const status = document.getElementById('status');
+        const usernameInput = document.getElementById('username');
+        const input = document.getElementById('input');
+        let ws = null;
+        let username = null;
+
+        function append(text, kind) {
+            const div = document.createElement('div');
+            if (kind) div.className = kind;
+            div.textContent = text;
+            log.appendChild(div);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function connect() {
+            ws = new WebSocket('ws://' + location.hostname + ':9099/ws');
+            ws.onopen = () => { append('--- connected ---', 'sys'); status.textContent = '已连接'; };
+            ws.onclose = () => { append('--- disconnected ---', 'sys'); status.textContent = '未连接'; };
+            ws.onerror = (e) => { append('[error] ' + JSON.stringify(e), 'sys'); };
+            ws.onmessage = (e) => { append(e.data); };
+        }
+
+        function send() {
+            const text = input.value.trim();
+            if (!text || !ws || ws.readyState !== 1) return;
+            ws.send(text);
+            input.value = '';
+        }
+
+        document.getElementById('btn-login').onclick = () => {
+            username = usernameInput.value.trim();
+            if (username) {
+                status.textContent = '已登录: ' + username;
+                append('[login] ' + username, 'sys');
+            }
+        };
+        document.getElementById('btn-send').onclick = send;
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') send(); });
+
+        connect();
+    </script>
+</body>
+</html>

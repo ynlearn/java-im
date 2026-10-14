@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.teachlearn.im</groupId>
+        <artifactId>java-im-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-03-reactor</artifactId>
+    <name>Module 03 - Reactor Pattern</name>
+    <description>
+        第 3 章：Reactor 模式。单 Reactor / 多线程 Reactor / 主从 Reactor，
+        手写极简实现，理解 Netty 内部的事件驱动模型。
+    </description>
+</project>

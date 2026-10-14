@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.teachlearn.im</groupId>
+        <artifactId>java-im-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-00-overview</artifactId>
+    <name>Module 00 - Overview and Baseline Socket</name>
+    <description>
+        第 0 章：全景图与基线 demo。用最简 Java Socket 复现一个 echo 服务，
+        作为后续章节 BIO / NIO / Netty 对照的起点。
+    </description>
+
+    <dependencies>
+        <!-- 第 0 章仅使用 JDK 自带的 java.net + java.io，不引入第三方依赖 -->
+    </dependencies>
+</project>

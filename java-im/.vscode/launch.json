@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "MasterSlaveReactorServer (9095)",
+      "request": "launch",
+      "mainClass": "com.teachlearn.im.reactor.MasterSlaveReactorServer",
+      "projectName": "module-03-reactor",
+      "vmArgs": "-Dfile.encoding=UTF-8",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "java",
+      "name": "SingleReactorServer (9094)",
+      "request": "launch",
+      "mainClass": "com.teachlearn.im.reactor.SingleReactorServer",
+      "projectName": "module-03-reactor",
+      "vmArgs": "-Dfile.encoding=UTF-8",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "java",
+      "name": "ReactorClient (interactive)",
+      "request": "launch",
+      "mainClass": "com.teachlearn.im.reactor.ReactorClient",
+      "projectName": "module-03-reactor",
+      "vmArgs": "-Dfile.encoding=UTF-8",
+      "console": "integratedTerminal"
+    }
+  ]
+}

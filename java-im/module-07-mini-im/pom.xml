@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.teachlearn.im</groupId>
+        <artifactId>java-im-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-07-mini-im</artifactId>
+    <name>Module 07 - Mini IM (Reactor Netty WebSocket)</name>
+    <description>
+        第 7 章：贯穿项目 mini IM。把 1-6 章能力合并：
+        im-common（协议帧） + im-server（Netty + 路由 + 离线） +
+        im-client（命令行）+ im-web（WebSocket 网页）。
+    </description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>im-common</module>
+        <module>im-server</module>
+        <module>im-client</module>
+        <module>im-web</module>
+    </modules>
+</project>

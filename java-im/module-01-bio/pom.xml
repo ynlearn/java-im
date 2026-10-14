@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.teachlearn.im</groupId>
+        <artifactId>java-im-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-01-bio</artifactId>
+    <name>Module 01 - BIO Synchronous Blocking</name>
+    <description>
+        第 1 章：BIO 同步阻塞。一连接一线程、伪异步 IO。
+        与第 0 章基线对比，演示阻塞 IO 的并发瓶颈。
+    </description>
+</project>

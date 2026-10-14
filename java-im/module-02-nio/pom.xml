@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.teachlearn.im</groupId>
+        <artifactId>java-im-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-02-nio</artifactId>
+    <name>Module 02 - NIO Multiplexing</name>
+    <description>
+        第 2 章：NIO 多路复用。Channel / Buffer / Selector 三件套，
+        单线程服务多连接，是后续 Reactor 与 Netty 的基础。
+    </description>
+</project>
