@@ -1,3 +1,11 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.jdt.ls.java.home": "C:\\Users\\EDY\\.jdks\\ms-17.0.20.1",
+    "java.configuration.runtimes": [
+        {
+        "name": "JavaSE-17",
+        "path": "C:\\Users\\EDY\\.jdks\\ms-17.0.20.1",
+        "default": true
+        }
+    ]
 }

@@ -58,7 +58,7 @@ java -cp module-05-netty-advanced/target/classes:$(同上) \
 
 ## 常见坑
 
-1. **`LengthFieldBasedFrameDecoder` 参数写错**：`lengthAdjustment = -8`（减去 magic + length），写错会导致 body 边界错位。
+1. **`LengthFieldBasedFrameDecoder` 参数写错**：本章 `length` 字段只算 body 长度，所以 `lengthAdjustment = 0`（帧总长 = magic 4 + length 4 + body）。误写成 `-8` 会把帧长算成 body 长度，短消息直接抛 `CorruptedFrameException`，表现为"客户端发送请求无响应"。
 2. **心跳 handler 不加 `@Sharable` 但又被多 channel 共享**：会抛 `IllegalStateException`。
 3. **重连未清零计数器**：第 6 次重连时已重置 0 之后的退避失效。
 4. **IdleStateHandler 不放在协议解码器之前**：会先解码失败再判空闲，错误顺序。

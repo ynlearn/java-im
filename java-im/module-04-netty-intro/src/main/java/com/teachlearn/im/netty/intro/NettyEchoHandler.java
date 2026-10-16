@@ -41,6 +41,8 @@ public class NettyEchoHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         // msg 实际是 ByteBuf；Pipeline 上游的 Framer 决定了真实类型
         ByteBuf in = (ByteBuf) msg;
+        String line = in.toString(CharsetUtil.UTF_8);
+        System.out.println("[netty] " + Thread.currentThread().getName() + " recv: " + line.trim());
         // echo 前面加 "echo: " 前缀
         // 注意：prefix 单独分配一个 ByteBuf，再 wrappedBuffer 合并；这样原 in 的 readerIndex 不会被破坏
         ByteBuf prefix = Unpooled.copiedBuffer("echo: ", CharsetUtil.UTF_8);

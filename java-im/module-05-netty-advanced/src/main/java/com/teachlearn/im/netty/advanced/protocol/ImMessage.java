@@ -27,14 +27,19 @@ import java.util.Arrays;
  * <h2>与 LengthFieldBasedFrameDecoder 配套</h2>
  * 在 Pipeline 中，{@code LengthFieldBasedFrameDecoder} 会按 length 字段切分半包，
  * 切完后剩下 magic + body，本类负责解析。
- * 参数 {@code (1024, 0, 4, -8, 0)} 的含义：
+ * 参数 {@code (1024, 4, 4, 0, 0)} 的含义：
  * <ul>
  *     <li>1024 = maxFrameLength 单帧最大字节数</li>
- *     <li>0 = lengthFieldOffset 长度字段偏移（紧跟 magic 4B 后）</li>
+ *     <li>4 = lengthFieldOffset 长度字段偏移（紧跟 magic 4B 后）</li>
  *     <li>4 = lengthFieldLength 长度字段本身 4B</li>
- *     <li>-8 = lengthAdjustment 长度字段"算到 body 结束"的修正（减去 magic 4B + length 4B）</li>
+ *     <li>0 = lengthAdjustment 长度补偿（length 字段值就是 body 字节数，
+ *         帧总长 = magic 4B + length 4B + body，无需补偿）</li>
  *     <li>0 = initialBytesToStrip 切完后要剥掉几字节（0=不剥）</li>
  * </ul>
+ * <p>注意：{@code lengthAdjustment} 千万不要写成 -8。拆包器的帧长公式是
+ * {@code 帧长 = length值 + lengthAdjustment + lengthFieldOffset + lengthFieldLength}，
+ * 代入就是 {@code 8 + body}。若写成 -8，帧长会被算成 {@code body}，短消息（body &lt; 8）
+ * 直接抛 {@code CorruptedFrameException}。
  */
 public class ImMessage {
 

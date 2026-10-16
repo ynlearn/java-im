@@ -41,8 +41,9 @@ public final class Protocol {
     public static final int LENGTH_FIELD_LENGTH = 4;
 
     /**
-     * 不需要 length 修正（实际帧总长度 = 4B length + payload）。
-     * 与 ImMessageDecoder 用法不同：后者用 -8 是因为 magic 也算进 length。
+     * 不需要 length 修正（length 字段值 = payload 长度，帧总长 = 4B length + payload）。
+     * 第 5 章的 ImMessage 虽然有 magic，但它的 length 字段同样只算 body，
+     * 所以两者 lengthAdjustment 都是 0；区别只在 lengthFieldOffset（第 5 章=4，本协议=0）。
      */
     public static final int LENGTH_ADJUSTMENT = 0;
 

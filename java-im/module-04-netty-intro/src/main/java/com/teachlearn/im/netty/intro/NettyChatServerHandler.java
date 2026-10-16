@@ -79,22 +79,21 @@ public class NettyChatServerHandler extends ChannelInboundHandlerAdapter {
     /**
      * 广播：遍历在线 channel 写同一份消息。
      *
-     * <h2>两个 Netty 进阶细节</h2>
-     * <ul>
-     *     <li>{@code buf.duplicate()} —— 复制 ByteBuf 的"读/写 index"，
-     *         但共享底层字节数组。
-     *         多个 channel 各自有独立的 index，发送互不干扰。</li>
-     *     <li>{@code writeAndFlush(buf)} —— 写入时 Netty 会自动调用 retain，
-     *         所以用 duplicate 后 channel 释放，原始 buf 仍可再用于其它 channel。</li>
-     * </ul>
+     * <h2>为什么不复用同一个 buf + duplicate</h2>
+     * {@link ByteBuf#duplicate()} 返回的派生 buf 在 release 时会委托给底层 buf
+     * （{@code AbstractDerivedByteBuf.release0 → unwrap().release()}），所以 dup 与
+     * 原始 buf <b>共享 refCnt</b>。若用 {@code buf.duplicate() + ch.writeAndFlush(dup)}，
+     * outbound buffer 写完 socket 后 release dup 也会让原始 buf 的 refCnt 归 0，
+     * 后续任何 release（其它 channel 的 dup 或循环外的 {@code buf.release()}）都会抛
+     * {@link io.netty.util.IllegalReferenceCountException}。
+     * <p>最稳妥的写法是每个 channel 各自分配一份独立 buf。
      */
     private void broadcast(String text) {
-        ByteBuf buf = Unpooled.copiedBuffer(text + "\n", StandardCharsets.UTF_8);
+        byte[] bytes = (text + "\n").getBytes(StandardCharsets.UTF_8);
         for (Channel ch : online.keySet()) {
-            ch.writeAndFlush(buf.duplicate());
+            // 每条 channel 自己的 ByteBuf：避免 duplicate 共享 refCnt 的陷阱
+            ch.writeAndFlush(Unpooled.copiedBuffer(bytes));
         }
-        // 用完后必须 release 原始 buf（duplicate 不会增加 refCnt）
-        buf.release();
     }
 
     @Override

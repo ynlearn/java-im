@@ -119,8 +119,10 @@ public final class ImClient {
              protected void initChannel(SocketChannel ch) {
                  // Pipeline 装配：协议帧 → 编解码 → 空闲检测 → 心跳 → 业务
                  ch.pipeline().addLast(
-                         // 1) 切半包/粘包
-                         new LengthFieldBasedFrameDecoder(1024, 0, 4, -8, 0),
+                         // 1) 切半包/粘包：length 字段在 magic 后面（offset=4）
+                         //    length 只算 body 字节数，帧总长 = magic(4) + length(4) + body，
+                         //    所以 lengthAdjustment = 0（不需要补偿）
+                         new LengthFieldBasedFrameDecoder(1024, 4, 4, 0, 0),
                          // 2) 字节 → ImMessage
                          new ImMessageDecoder(),
                          // 3) ImMessage → 字节

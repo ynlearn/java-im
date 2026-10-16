@@ -68,8 +68,10 @@ public final class ImServer {
                  protected void initChannel(SocketChannel ch) {
                      // Pipeline 装配：严格按数据流向（上游 → 下游）
                      ch.pipeline().addLast(
-                             // 1) 半包/粘包处理：按 length 字段切完整帧
-                             new LengthFieldBasedFrameDecoder(1024, 0, 4, -8, 0),
+                             // 1) 半包/粘包处理：length 字段在 magic 后面（offset=4）
+                             //    length 只算 body 字节数，帧总长 = magic(4) + length(4) + body，
+                             //    所以 lengthAdjustment = 0（不需要补偿）
+                             new LengthFieldBasedFrameDecoder(1024, 4, 4, 0, 0),
                              // 2) 自定义协议解码
                              new ImMessageDecoder(),
                              // 3) 自定义协议编码

@@ -39,9 +39,9 @@ TCP 是**字节流协议**，没有消息边界。两种典型问题：
 | 参数 | 含义 | 本章值 |
 |---|---|---|
 | `maxFrameLen` | 单帧最大字节 | 1024 |
-| `lengthFieldOffset` | 长度字段偏移 | 0（紧跟 magic） |
+| `lengthFieldOffset` | 长度字段偏移 | 4（magic 占 4B，length 紧跟其后） |
 | `lengthFieldLength` | 长度字段字节数 | 4 |
-| `lengthAdjustment` | 长度补偿（除 length 外的字节数） | -8（-magic-len） |
+| `lengthAdjustment` | 长度补偿（除 length 外的字节数） | 0（length 只算 body） |
 | `initialBytesToStrip` | 剥掉前几个字节 | 0（保留 magic 给 decoder） |
 
 ## 5.4 心跳机制

@@ -62,7 +62,7 @@ public final class ReactorClient {
                 // flip 切到读模式
                 readBuf.flip();
                 String echo = StandardCharsets.UTF_8.decode(readBuf).toString().trim();
-                System.out.println("[nio-client] <- " + echo + "\n");
+                System.out.println("[nio-client] <- " + echo );
             }
         }
     }
